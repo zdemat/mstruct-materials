@@ -1,0 +1,128 @@
+// Job type
+0					job type (0-data refinement,1-grid refinement)
+
+// Input Data Filenames and Formats
+anatase_300.xy     0			data filename (2th,obs(,sigma)),data format type (0-xy,1-xysigma)			
+default     				maximum sin(theta)/lambda 0.535 0.45
+
+// Background
+general		   2			background filename/(general), background type/(number of background components)
+interpolated				background component type (chebyshev,invX,interpolated)
+anatase_300.bgr    0			background filename (2th,bkg),background type (0-linear,1-cubic spline)
+0					number of refined background points
+//6 7 8 9 10 11 12 13			numbers of refined background points (first is 0) 19 20 22
+//invX               1			background component type (chebyshev,invX,interpolated), X-func. type (0-X,1-sin(Th))
+chebyshev          1			background component type (chebyshev, invX, interpolated), X-func. type (0-X,1-sin(Th))
+1					polynomial degree (number of coefficients-1)
+  0.00    0.00				values of coefficients (starting with zero-order)
+     0	     0				coefficients refinement flags (0-refined,1-fixed)
+
+// Instrumental Parameters
+-2.0					incidence angle (deg)-2Theta scan, negative value-2Theta/Theta scan
+4.451e-3 3.433e-3 -3.120e-3   		instrumental profile params (W,U,V) MPD-Pixcel-variable slits
+4.958e-1 1.325e-1       		instrumental profile params (Eta0,Eta1)
+-4.367e-1 1.368 0. 60.			instrumental profile params (Asym0,Asym1,Asym2,Asym2ThetaMax(deg))
+Cu   0.5   0.00				wavelength type (Cu,CuA1),linear poalrization rate(A=0.8,f=(1-A)/(1+A)=0.36 graphite mon.,f=0. unmonochromatized)					
+0					number of excluded regions
+//110.0   130.0				min2Theta, max2Theta (deg)
+
+// Crystal Phases
+1					number of phases
+diffData_Anatase			phase name (diffDataCrystal)
+
+// the 1st phase - crystal data
+structures.xml   AnataseITF		filename, name (filename-crystal xml file,name-crystal name)
+
+// the 1st phase - thin film absorption correction
+-1.e5    0.   530.			absorp corr params: thickness(nm),depth(nm),abs.factor(1/um)
+0					nb of texture phases
+0	0				hkl file(0-don't use,1-generate,2-free all,3-read),print HKLIntensities(0-no,1-yes)
+
+// the 1st phase - physical line broadening
+2					number of additional broadening effects
+
+// the 1st phase - Size broadening - lognormal distribution of crystals diameter (median - M, shape - Sigma)
+SizeLn	       sizeProfAnatase		broadening component type (pVoigt(A),SizeLn,dislocSLvB,HKLpVoigtA),effect name,comp=1
+5.0     0.3				M(nm),sigma
+
+// the 1st phase - Strain broadening - modeled by pseudoVoigt function
+//                                   - only U-Cagliotu param. (W=V=0.) and shape Eta0 (Eta1=0) params. refined
+pVoigtA	       strainProfAnatase	broadening component type (pVoigt(A),SizeLn,dislocSLvB,HKLpVoigtA),effect name,comp=2
+0.  1.  0.				profile params (W,U,V)
+0.0       0.				profile params (Eta0,Eta1)
+1.   0.   0.   60.			profile params (Asym0,Asym1,Asym2,Asym2ThetaMax(deg))
+
+// output filename
+anatase_300.dat	  			output filename
+
+// number of refinement iteractions
+20					nb of interactions
+// number of parameter which will be set
+12					nb of params
+
+// begin of the parameters section
+// *********************************************************************************
+
+Scale_diffData_Anatase   		* param name
+1.e-3					scale
+1.00  0.01				value, derivative step 0.01
+0					limited (0,1), min, max
+
+Zero					* param name
+0.0175					scale
+ 0.000	0.000				value, derivative step 0.04
+0					limited (0,1), min, max
+
+2ThetaDispl				* param name
+0.0175					scale
+ 0.000	0.02				value, derivative step 0.02
+0					limited (0,1), min, max
+
+Anatase:a				* param name
+1.					scale
+3.7860      0.0004			value, derivative step 0.0004
+0					limited (0,1), min, max
+
+Anatase:c				* param name
+1.					scale
+9.5120      0.0008			value, derivative step 0.0008
+0					limited (0,1), min, max
+
+sizeProfAnatase:M			* param name
+10.					scale
+5.0      0.0                		value, derivative step 0.5
+1 2. 500.				limited (0,1), min, max
+
+strainProfAnatase:U			* U (microstrain) #89 (U)
+3.0462e-4				scale
+0.10       0.00				value, derivative step 0.02
+1 0.0 10.0				limited (0,1), min, max
+
+strainProfAnatase:Eta0			* Eta0 (0. -> pure Gaussian) #92 (Eta0)
+1.					scale
+0.00         0.00			value, derivative step 0.60 0.05 0.02
+1  0.  1.				limited (0,1), min, max
+
+sizeProfAnatase:Sigma			* param name
+1.					scale
+0.20  0.00				value, derivative step
+1 0.1  0.6				limited (0,1), min, max
+
+AnataseITF:Ti:Biso      		* param name
+1.					scale
+1.00 0.05				value, derivative step5
+0       				limited (0,1), min, max
+
+AnataseITF:O:Biso      			* param name
+1.					scale
+1.00 0.05				value, derivative step
+0       				limited (0,1), min, max
+
+diffData_Anatase:Global_Biso		* param name
+1.					scale
+0.0 0.00				value, derivative step
+0       				limited (0,1), min, max
+
+// *********************************************************************************
+// end of the parameters section
+
